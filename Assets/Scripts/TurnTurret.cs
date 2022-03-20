@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TurnTurret : MonoBehaviour
 {
-
+    private PlayerController playerControllerScript;
 
     public float speedH;
     public float speedV;
@@ -19,6 +19,11 @@ public class TurnTurret : MonoBehaviour
     private bool IsCoolDown = true;
     private float shootSpeed = 1f;
 
+    void Start()
+    {
+        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+    }
+
     void Update()
     {   
         yaw += speedH * Input.GetAxis("Mouse X");
@@ -28,7 +33,7 @@ public class TurnTurret : MonoBehaviour
 
 
         //Disoaro
-        if (Input.GetKeyDown(KeyCode.Mouse0) && IsCoolDown)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && IsCoolDown && !playerControllerScript.gameOver)
         {
             Instantiate(projectilePrefab, transform.position, transform.rotation);
             StartCoroutine(CoolDown());
