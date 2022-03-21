@@ -9,6 +9,8 @@ public class DetectCollision : MonoBehaviour
     //Accedim al script PlayerController per tenir les variables gameOver i victory 
     private PlayerController playerControllerScript;
 
+    private SongManager soundManager;
+
     //Variable per acutalizar la puntuació
     public int points;
 
@@ -57,6 +59,8 @@ public class DetectCollision : MonoBehaviour
 
             //Instanciam el sistema de particules de explosió
             Instantiate(bigExplosionParticleSystem, transform.position, bigExplosionParticleSystem.transform.rotation);
+
+            soundManager.SelecionAudio(0, 1f);
         }
 
         //Si la bala entre en contacte amb una roca
@@ -86,7 +90,12 @@ public class DetectCollision : MonoBehaviour
             //Instanciam el sistema de particules de explosió
             Instantiate(bigExplosionParticleSystem, transform.position, bigExplosionParticleSystem.transform.rotation);                            
         }
+    }
 
+    //Funció per accedir al so
+    private void Awake()
+    {
+        soundManager = FindObjectOfType<SongManager>();
     }
 
 }
