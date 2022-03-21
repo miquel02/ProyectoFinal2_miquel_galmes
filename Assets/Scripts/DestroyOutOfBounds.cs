@@ -4,21 +4,19 @@ using UnityEngine;
 
 public class DestroyOutOfBounds : MonoBehaviour
 {
+    //AQUEST SCRIPT S'ENCARREGA DE FER QUE LES BALES DESAPERESQUIN SI SURTEN DEL MAPA
 
+    //Variables per determinar el limits
     private float upperLim = 50f;
     private float lowerLim = -50f;
-
-
-    
+ 
     void Update()
-    {
-        
+    {       
         if (transform.position.z > upperLim)
         {
             Destroy(gameObject);
         }
-
-        
+       
         if (transform.position.z < lowerLim)
         {
             Destroy(gameObject);
@@ -33,6 +31,5 @@ public class DestroyOutOfBounds : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 }

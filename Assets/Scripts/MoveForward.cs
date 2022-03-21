@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class MoveForward : MonoBehaviour
 {
+    //AQUEST SCRIPT S'ENCARREGA DE FER QUE LES BALES ES MOGUIN
+
+    //Variable que determina la velocitat de la bala
     public float speed = 20f;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
+    
     void Update()
     {
+        //Feim que la bala es mogui per envant
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 }

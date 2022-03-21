@@ -5,20 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //AQUEST SCRIPT S'ENCARREGA DE COBNTROLAR L'ESCENA DE MAIN MENU
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    //Funcio per fer que el botó de start ens dugui al joc
     public void GameScene()
     {
         SceneManager.LoadScene("Game");
+    }
+
+    //Funcio per fer que el botó de controles ens dugui als controls
+    public void ControlsScene()
+    {
+        SceneManager.LoadScene("Controles");
     }
 }

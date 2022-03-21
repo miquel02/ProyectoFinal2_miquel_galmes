@@ -4,93 +4,87 @@ using UnityEngine;
 
 public class DetectCollision : MonoBehaviour
 {
+    //AQUEST SCRIPT S'ENCARREGA DE DETECTAR LES COLISIONS ENTRE LES BALES I ELS ALTRES OBJECTES DEL MAPA
 
+    //Accedim al script PlayerController per tenir les variables gameOver i victory 
     private PlayerController playerControllerScript;
 
+    //Variable per acutalizar la puntuació
     public int points;
 
+    //Variables per guardar els sistemes de particuales
     public ParticleSystem explosionParticleSystem;
-    public ParticleSystem bigExplosionParticleSystem;
-
-    public ParticleSystem coinParticleSystem;
+    public ParticleSystem bigExplosionParticleSystem;   
     public ParticleSystem healthParticleSystem;
 
     void Start()
     {
+        //Accedim al script PlayerController
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
+    //Funció per fer una accio quna 2 colliders entren en contacte
     private void OnTriggerEnter(Collider otherCollider)
     {
-
+        //Si la bala entre en contacte amb un enemic
         if (gameObject.CompareTag("Shell") && otherCollider.gameObject.CompareTag("Enemy"))
         {
-            //Destruyo el proyectil
+            //Destruim la bala
             Destroy(gameObject);
 
-
-            // Destruyo el animal contra el que colisiona
+            //Destruim l'enemic
             Destroy(otherCollider.gameObject);
 
-            //coinParticleSystem = Instantiate(coinParticleSystem, transform.position, coinParticleSystem.transform.rotation);
-            //coinParticleSystem.Play();
-
+            //Instanciam el sistema de particules de curació
             healthParticleSystem = Instantiate(healthParticleSystem, transform.position, healthParticleSystem.transform.rotation);
             healthParticleSystem.Play();
 
-            explosionParticleSystem = Instantiate(explosionParticleSystem, transform.position, explosionParticleSystem.transform.rotation);
-            explosionParticleSystem.Play();
-
-
+            //Instanciam el sistema de particules de explosió
+            Instantiate(explosionParticleSystem, transform.position, explosionParticleSystem.transform.rotation);
+            
+            //Actualitzam la puntuació
             playerControllerScript.UpdateScore(points);
         }
 
+        //Si la bala entre en contacte amb un edifici
         if (gameObject.CompareTag("Shell") && otherCollider.gameObject.CompareTag("Building"))
         {
-
-            
-            bigExplosionParticleSystem = Instantiate(bigExplosionParticleSystem, transform.position, bigExplosionParticleSystem.transform.rotation);
-            bigExplosionParticleSystem.Play();
-            //Destruyo el proyectil
+            //Destruim la bala                                 
             Destroy(gameObject);
 
-
-            // Destruyo el animal contra el que colisiona
+            //Destruim l'edifici
             Destroy(otherCollider.gameObject);
+
+            //Instanciam el sistema de particules de explosió
+            Instantiate(bigExplosionParticleSystem, transform.position, bigExplosionParticleSystem.transform.rotation);
         }
 
+        //Si la bala entre en contacte amb una roca
         if (gameObject.CompareTag("Shell") && otherCollider.gameObject.CompareTag("Nature"))
         {
-
-
-            
-            //Destruyo el proyectil
-            Destroy(gameObject);
-
-
-            // Destruyo el animal contra el que colisiona
-            //Destroy(otherCollider.gameObject);
+            //Destruim la bala
+            Destroy(gameObject);    
         }
 
+        //Si la bala enemiga entre en contacte amb el player
         if (gameObject.CompareTag("Bullet") && otherCollider.gameObject.CompareTag("Player"))
         {
-            //Destruyo el proyectil
+            //Destruim la bala 
             Destroy(gameObject);
 
-            explosionParticleSystem = Instantiate(explosionParticleSystem, transform.position, explosionParticleSystem.transform.rotation);
+            //Instanciam el sistema de particules de explosió
+            Instantiate(explosionParticleSystem, transform.position, explosionParticleSystem.transform.rotation);
             explosionParticleSystem.Play();
         }
 
+        //Si la bala enemiga entre en contacte amb un edifici
         if (gameObject.CompareTag("Bullet") && otherCollider.gameObject.CompareTag("Building"))
         {
-            //Destruyo el proyectil
+            //Destruim la bala 
             Destroy(gameObject);
 
-
-            bigExplosionParticleSystem = Instantiate(bigExplosionParticleSystem, transform.position, bigExplosionParticleSystem.transform.rotation);
-            bigExplosionParticleSystem.Play();
-            Destroy(bigExplosionParticleSystem);
-            
+            //Instanciam el sistema de particules de explosió
+            Instantiate(bigExplosionParticleSystem, transform.position, bigExplosionParticleSystem.transform.rotation);                            
         }
 
     }

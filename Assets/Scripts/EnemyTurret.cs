@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class EnemyTurret : MonoBehaviour
 {
+    //AQUEST SCRIPT S'ENCARREGA DE FER QUE ELS ENEMICS MIRIN AL PLAYER
 
+    //Variable per guardar la posicio el player
     public Transform target;
-
-  
-    // Update is called once per frame
+   
     void Update()
     {
-        Vector3 targetOrientation = target.position - transform.position;
-        Debug.DrawRay(transform.position, targetOrientation, Color.green);
-
+        Vector3 targetOrientation = target.position - transform.position;       
         Quaternion targetOrientationQuaternion = Quaternion.LookRotation(targetOrientation);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetOrientationQuaternion, Time.deltaTime);
     }

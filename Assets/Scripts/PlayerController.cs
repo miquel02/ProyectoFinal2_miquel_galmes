@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
 
     public bool gameOver;
+    public bool victory;
    
     public float speed = 20f;
     public float turnspeed = 40f;
@@ -22,18 +23,20 @@ public class PlayerController : MonoBehaviour
 
     public TextMeshProUGUI scoreText;
     private int score = 0;
+    private int maxScore = 20;
 
 
     void Start()
     {
-        //gameOver = false;
+        victory = false;
+        gameOver = false;
         currentHealth = maxHealth;
         healthBar.SetmaxHealth(maxHealth);       
     }
 
     void Update()
     {
-        if(!gameOver)
+        if(!gameOver && !victory)
         {
             // Usamos los inputs del Input Manager
             horizontalInput = Input.GetAxis("Horizontal");
@@ -51,6 +54,17 @@ public class PlayerController : MonoBehaviour
             gameOver = true;
         }
 
+        if(currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
+        if(score == maxScore)
+        {
+            victory = true;
+        }
+
+
     }
 
     void TakeDamage(int damage)
@@ -67,7 +81,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider otherCollider)
     {
-        if (gameObject.CompareTag("Player") && otherCollider.gameObject.CompareTag("Building"))
+        if (gameObject.CompareTag("Player") && otherCollider.gameObject.CompareTag("Building") && !gameOver && !victory)
         {
             
             TakeDamage(5);
@@ -77,25 +91,23 @@ public class PlayerController : MonoBehaviour
             //Destroy(explosionParticleSystem);
         }
 
-        if (gameObject.CompareTag("Player") && otherCollider.gameObject.CompareTag("Bullet"))
+        if (gameObject.CompareTag("Player") && otherCollider.gameObject.CompareTag("Bullet") && !gameOver && !victory)
         {
             TakeDamage(10);
         }
 
-        if (gameObject.CompareTag("Player") && otherCollider.gameObject.CompareTag("Healing"))
+        if (gameObject.CompareTag("Player") && otherCollider.gameObject.CompareTag("Healing") && !gameOver && !victory)
         {
             HealDamage(30);
             Destroy(otherCollider.gameObject);
 
         }
-
-       
-
     } 
+
     public void UpdateScore(int pointsToAdd)
         {
             score ++;//Linea per actualitzar l'score
-            scoreText.text = $"TANKS LEFT: {score}/16";
+            scoreText.text = $"TANKS LEFT: {score}/{maxScore}";
         }
     
 }

@@ -25,24 +25,26 @@ public class TurnTurret : MonoBehaviour
     }
 
     void Update()
-    {   
-        yaw += speedH * Input.GetAxis("Mouse X");
-        pitch += speedV * Input.GetAxis("Mouse Y");
+    {
+        if(!playerControllerScript.gameOver && !playerControllerScript.victory)
+        {
+            yaw += speedH * Input.GetAxis("Mouse X");
+            pitch += speedV * Input.GetAxis("Mouse Y");
 
-        cabina.transform.Rotate(Vector3.up, yaw * Time.deltaTime);
+            cabina.transform.Rotate(Vector3.up, yaw * Time.deltaTime);
+
+        }
+        
 
 
         //Disoaro
-        if (Input.GetKeyDown(KeyCode.Mouse0) && IsCoolDown && !playerControllerScript.gameOver)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && IsCoolDown && !playerControllerScript.gameOver && !playerControllerScript.victory)
         {
             Instantiate(projectilePrefab, transform.position, transform.rotation);
             StartCoroutine(CoolDown());
         }       
 
     }
-
-    
-    
     
     private IEnumerator CoolDown()
     {
@@ -50,10 +52,6 @@ public class TurnTurret : MonoBehaviour
         yield return new WaitForSeconds(shootSpeed);
         IsCoolDown = true;
         
-    }
-    
-
-
-
+    }   
 
 }
